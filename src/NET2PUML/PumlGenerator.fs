@@ -5,8 +5,8 @@ open System.Text
 open Net2Puml.Uml
 
 let ofMember = function
-    | Field n  -> n
-    | Method n -> $"{n}()"
+    | Field  (n, ft) -> $"{n} : {ft}"
+    | Method (n, rt) -> $"{n}() : {rt}"
 
 let private ofElement' t n i = $"%s{t} %s{n}{{{Environment.NewLine}%s{i}}}"
 

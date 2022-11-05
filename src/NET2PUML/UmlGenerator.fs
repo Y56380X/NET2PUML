@@ -5,8 +5,8 @@ open Net2Puml.Uml
 
 let ofMemberInfo (m: MemberInfo) =
     match m with
-    | :? FieldInfo  as f -> Some <| Field  f.Name
-    | :? MethodInfo as m -> Some <| Method m.Name
+    | :? FieldInfo  as f -> Some <| Field  (f.Name, f.FieldType.Name)
+    | :? MethodInfo as m -> Some <| Method (m.Name, m.ReturnType.Name)
     | _                  -> None
 
 let ofTypeInfo (t: TypeInfo) =
