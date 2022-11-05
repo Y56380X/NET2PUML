@@ -8,10 +8,10 @@ let ofMember = function
     | Field n  -> n
     | Method n -> $"{n}()"
 
-let private ofElement' = sprintf "%s %s{\n%s}"
+let private ofElement' t n i = $"%s{t} %s{n}{{{Environment.NewLine}%s{i}}}"
 
 let private ofMembers =
-    let ofMember = ofMember >> sprintf "\t%s\n"
+    let ofMember m = $"\t%s{ofMember m}{Environment.NewLine}"
     Seq.map ofMember >> String.Concat
 
 let ofElement = function
