@@ -5,9 +5,23 @@ open Net2Puml.Uml
 
 let ofMemberInfo (m: MemberInfo) =
     match m with
-    | :? FieldInfo  as f -> Some <| Field  (f.Name, f.FieldType.Name)
-    | :? MethodInfo as m -> Some <| Method (m.Name, m.ReturnType.Name)
-    | _                  -> None
+    | :? FieldInfo  as f ->
+        let visibility =
+            if f.IsPrivate
+            then Visibility.Private
+            elif f.IsPublic
+            then Visibility.Public
+            else Visibility.Other
+        Some <| Field  (f.Name, visibility, f.FieldType.Name)
+    | :? MethodInfo as m ->
+        let visibility =
+            if m.IsPrivate
+            then Visibility.Private
+            elif m.IsPublic
+            then Visibility.Public
+            else Visibility.Other
+        Some <| Method (m.Name, visibility, m.ReturnType.Name)
+    | _ -> None
 
 let ofTypeInfo (t: TypeInfo) =
     let (|Class|Interface|Other|) (t: TypeInfo) =

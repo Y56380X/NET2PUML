@@ -4,9 +4,15 @@ open System
 open System.Text
 open Net2Puml.Uml
 
+let ofVisibility = function
+    | Visibility.Private -> "-"
+    | Visibility.Public  -> "+"
+    | Visibility.Other   -> String.Empty
+    | _                  -> raise (ArgumentOutOfRangeException "Unknown visibility value.")
+
 let ofMember = function
-    | Field  (n, ft) -> $"{n} : {ft}"
-    | Method (n, rt) -> $"{n}() : {rt}"
+    | Field  (n, v, ft) -> $"{ofVisibility v}{n} : {ft}"
+    | Method (n, v, rt) -> $"{ofVisibility v}{n}() : {rt}"
 
 let private ofElement' t n i = $"%s{t} %s{n}{{{Environment.NewLine}%s{i}}}"
 
