@@ -23,6 +23,10 @@ let ofMemberInfo (m: MemberInfo) =
             then Visibility.Private
             elif m.IsPublic
             then Visibility.Public
+            elif m.IsFamily
+            then Visibility.Protected
+            elif m.IsAssembly
+            then Visibility.Package
             else Visibility.Other
         Some <| Method (m.Name, visibility, m.ReturnType.Name)
     | _ -> None
