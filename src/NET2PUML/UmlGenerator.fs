@@ -13,6 +13,8 @@ let ofMemberInfo (m: MemberInfo) =
             then Visibility.Public
             elif f.IsFamily
             then Visibility.Protected
+            elif f.IsAssembly
+            then Visibility.Package
             else Visibility.Other
         Some <| Field  (f.Name, visibility, f.FieldType.Name)
     | :? MethodInfo as m ->

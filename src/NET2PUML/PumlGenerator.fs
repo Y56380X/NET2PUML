@@ -8,6 +8,7 @@ let ofVisibility = function
     | Visibility.Private   -> "-"
     | Visibility.Public    -> "+"
     | Visibility.Protected -> "#"
+    | Visibility.Package   -> "~"
     | Visibility.Other     -> String.Empty
     | _                    -> raise (ArgumentOutOfRangeException "Unknown visibility value.")
 
