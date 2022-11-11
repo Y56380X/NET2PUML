@@ -5,7 +5,7 @@ type Visibility =
     | Public    = 1
     | Protected = 2
     | Package   = 3
-    | Other     = 4 // For now only private and public are supported
+    | Other     = 4
 
 type Member =
     | Field  of Name: string * Visibility: Visibility * Type: string
