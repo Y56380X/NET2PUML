@@ -1,9 +1,10 @@
 module Net2Puml.Uml
 
 type Visibility =
-    | Private = 0
-    | Public  = 1
-    | Other   = 2 // For now only private and public are supported
+    | Private   = 0
+    | Public    = 1
+    | Protected = 2
+    | Other     = 3 // For now only private and public are supported
 
 type Member =
     | Field  of Name: string * Visibility: Visibility * Type: string

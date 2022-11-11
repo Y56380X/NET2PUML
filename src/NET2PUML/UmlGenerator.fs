@@ -11,6 +11,8 @@ let ofMemberInfo (m: MemberInfo) =
             then Visibility.Private
             elif f.IsPublic
             then Visibility.Public
+            elif f.IsFamily
+            then Visibility.Protected
             else Visibility.Other
         Some <| Field  (f.Name, visibility, f.FieldType.Name)
     | :? MethodInfo as m ->

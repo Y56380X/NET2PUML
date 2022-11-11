@@ -5,10 +5,11 @@ open System.Text
 open Net2Puml.Uml
 
 let ofVisibility = function
-    | Visibility.Private -> "-"
-    | Visibility.Public  -> "+"
-    | Visibility.Other   -> String.Empty
-    | _                  -> raise (ArgumentOutOfRangeException "Unknown visibility value.")
+    | Visibility.Private   -> "-"
+    | Visibility.Public    -> "+"
+    | Visibility.Protected -> "#"
+    | Visibility.Other     -> String.Empty
+    | _                    -> raise (ArgumentOutOfRangeException "Unknown visibility value.")
 
 let ofMember = function
     | Field  (n, v, ft) -> $"{ofVisibility v}{n} : {ft}"
