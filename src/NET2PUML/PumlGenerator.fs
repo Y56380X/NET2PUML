@@ -25,6 +25,7 @@ let private ofMembers =
 let ofElement = function
     | Class     (n, ms) -> ofElement' "class"     n (ofMembers ms)
     | Interface (n, ms) -> ofElement' "interface" n (ofMembers ms)
+    | Struct    (n, ms) -> ofElement' "struct"    n (ofMembers ms)
 
 let ofDocument (d: Document) =
     let builder = StringBuilder ()

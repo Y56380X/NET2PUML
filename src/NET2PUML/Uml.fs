@@ -14,5 +14,6 @@ type Member =
 type Element =
     | Class     of Name: string * Members: Member seq
     | Interface of Name: string * Members: Member seq
+    | Struct    of Name: string * Members: Member seq
 
 type Document = Element seq
