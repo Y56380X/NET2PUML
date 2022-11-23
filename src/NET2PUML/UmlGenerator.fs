@@ -52,11 +52,19 @@ let ofTypeInfo (t: TypeInfo) =
         else Other
     let umlMembers (t: TypeInfo) = Seq.map ofMemberInfo t.DeclaredMembers |> Seq.choose id
     let umlValues : TypeInfo -> Value seq = System.Enum.GetNames >> Seq.map Value
+    let umlRelations (t: TypeInfo) =
+        let isWithinAssembly (rt: System.Type) = rt <> null && rt.Assembly <> null && t.Assembly.Equals rt.Assembly
+        seq {
+            if isWithinAssembly t.BaseType
+            then yield Inherit t.BaseType.Name
+            for t in t.ImplementedInterfaces |> Seq.where isWithinAssembly do
+                yield Implements t.Name
+        }
     match t with
-    | Class         -> Some <| Class         (t.Name, umlMembers t)
-    | AbstractClass -> Some <| AbstractClass (t.Name, umlMembers t)
-    | Interface     -> Some <| Interface     (t.Name, umlMembers t)
-    | Struct        -> Some <| Struct        (t.Name, umlMembers t)
+    | Class         -> Some <| Class         (t.Name, umlMembers t, umlRelations t)
+    | AbstractClass -> Some <| AbstractClass (t.Name, umlMembers t, umlRelations t)
+    | Interface     -> Some <| Interface     (t.Name, umlMembers t, umlRelations t)
+    | Struct        -> Some <| Struct        (t.Name, umlMembers t, umlRelations t)
     | Enum          -> Some <| Enum          (t.Name, umlValues  t)
     | Other         -> None
 

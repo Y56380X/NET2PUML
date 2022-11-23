@@ -19,7 +19,8 @@ let ofMember = function
 let ofValue = function
     | Value n -> n
 
-let private ofElement' t n i = $"%s{t} %s{n}{{{Environment.NewLine}%s{i}}}"
+let private ofElement' typeName name members relations =
+    $"%s{typeName} %s{name}{{{Environment.NewLine}%s{members}}}{relations}"
 
 let private ofMembers =
     let ofMember m = $"\t%s{ofMember m}{Environment.NewLine}"
@@ -29,12 +30,18 @@ let private ofValues =
     let ofValue v = $"\t%s{ofValue v}{Environment.NewLine}"
     Seq.map ofValue >> String.Concat
 
+let private ofRelations elementName =
+    let ofRelation = function
+        | Inherit    n -> $"{Environment.NewLine}\"{n}\" <|-- \"{elementName}\""
+        | Implements n -> $"{Environment.NewLine}\"{n}\" <|-- \"{elementName}\""
+    Seq.map ofRelation >> String.Concat
+
 let ofElement = function
-    | Class         (n, ms) -> ofElement' "class"          n (ofMembers ms)
-    | AbstractClass (n, ms) -> ofElement' "abstract class" n (ofMembers ms)
-    | Interface     (n, ms) -> ofElement' "interface"      n (ofMembers ms)
-    | Struct        (n, ms) -> ofElement' "struct"         n (ofMembers ms)
-    | Enum          (n, vs) -> ofElement' "enum"           n (ofValues  vs)
+    | Class         (n, ms, rs) -> ofElement' "class"          n (ofMembers ms) (ofRelations n rs)
+    | AbstractClass (n, ms, rs) -> ofElement' "abstract class" n (ofMembers ms) (ofRelations n rs)
+    | Interface     (n, ms, rs) -> ofElement' "interface"      n (ofMembers ms) (ofRelations n rs)
+    | Struct        (n, ms, rs) -> ofElement' "struct"         n (ofMembers ms) (ofRelations n rs)
+    | Enum          (n, vs)     -> ofElement' "enum"           n (ofValues  vs) String.Empty
 
 let ofDocument (d: Document) =
     let builder = StringBuilder ()

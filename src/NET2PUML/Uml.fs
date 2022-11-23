@@ -14,11 +14,15 @@ type Member =
 type Value =
     | Value of Value: string
 
+type Relation =
+    | Inherit    of Name: string
+    | Implements of Name: string
+
 type Element =
-    | Class         of Name: string * Members: Member seq
-    | AbstractClass of Name: string * Members: Member seq
-    | Interface     of Name: string * Members: Member seq
-    | Struct        of Name: string * Members: Member seq
+    | Class         of Name: string * Members: Member seq * Relations: Relation seq
+    | AbstractClass of Name: string * Members: Member seq * Relations: Relation seq
+    | Interface     of Name: string * Members: Member seq * Relations: Relation seq
+    | Struct        of Name: string * Members: Member seq * Relations: Relation seq
     | Enum          of Name: string * Values:  Value  seq
 
 type Document = Element seq
