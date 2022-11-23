@@ -30,10 +30,11 @@ let private ofValues =
     Seq.map ofValue >> String.Concat
 
 let ofElement = function
-    | Class     (n, ms) -> ofElement' "class"     n (ofMembers ms)
-    | Interface (n, ms) -> ofElement' "interface" n (ofMembers ms)
-    | Struct    (n, ms) -> ofElement' "struct"    n (ofMembers ms)
-    | Enum      (n, vs) -> ofElement' "enum"      n (ofValues  vs)
+    | Class         (n, ms) -> ofElement' "class"          n (ofMembers ms)
+    | AbstractClass (n, ms) -> ofElement' "abstract class" n (ofMembers ms)
+    | Interface     (n, ms) -> ofElement' "interface"      n (ofMembers ms)
+    | Struct        (n, ms) -> ofElement' "struct"         n (ofMembers ms)
+    | Enum          (n, vs) -> ofElement' "enum"           n (ofValues  vs)
 
 let ofDocument (d: Document) =
     let builder = StringBuilder ()

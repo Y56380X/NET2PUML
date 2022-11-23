@@ -32,9 +32,9 @@ let ofMemberInfo (m: MemberInfo) =
     | _ -> None
 
 let ofTypeInfo (t: TypeInfo) =
-    let (|Class|Interface|Struct|Enum|Other|) (t: TypeInfo) =
+    let (|Class|AbstractClass|Interface|Struct|Enum|Other|) (t: TypeInfo) =
         if t.IsClass
-        then Class
+        then if t.IsAbstract then AbstractClass else Class
         elif t.IsInterface
         then Interface
         elif t.IsEnum
@@ -45,11 +45,12 @@ let ofTypeInfo (t: TypeInfo) =
     let umlMembers (t: TypeInfo) = Seq.map ofMemberInfo t.DeclaredMembers |> Seq.choose id
     let umlValues : TypeInfo -> Value seq = System.Enum.GetNames >> Seq.map Value
     match t with
-    | Class     -> Some <| Class     (t.Name, umlMembers t)
-    | Interface -> Some <| Interface (t.Name, umlMembers t)
-    | Struct    -> Some <| Struct    (t.Name, umlMembers t)
-    | Enum      -> Some <| Enum      (t.Name, umlValues  t)
-    | Other     -> None
+    | Class         -> Some <| Class         (t.Name, umlMembers t)
+    | AbstractClass -> Some <| AbstractClass (t.Name, umlMembers t)
+    | Interface     -> Some <| Interface     (t.Name, umlMembers t)
+    | Struct        -> Some <| Struct        (t.Name, umlMembers t)
+    | Enum          -> Some <| Enum          (t.Name, umlValues  t)
+    | Other         -> None
 
 let ofAssembly (a: Assembly) =
     a.GetExportedTypes ()

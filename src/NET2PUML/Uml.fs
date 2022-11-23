@@ -15,9 +15,10 @@ type Value =
     | Value of Value: string
 
 type Element =
-    | Class     of Name: string * Members: Member seq
-    | Interface of Name: string * Members: Member seq
-    | Struct    of Name: string * Members: Member seq
-    | Enum      of Name: string * Values:  Value  seq
+    | Class         of Name: string * Members: Member seq
+    | AbstractClass of Name: string * Members: Member seq
+    | Interface     of Name: string * Members: Member seq
+    | Struct        of Name: string * Members: Member seq
+    | Enum          of Name: string * Values:  Value  seq
 
 type Document = Element seq
