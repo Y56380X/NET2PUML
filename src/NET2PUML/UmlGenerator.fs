@@ -3,6 +3,14 @@ module Net2Puml.UmlGenerator
 open System.Reflection
 open Net2Puml.Uml
 
+module private Utils =
+    let sortTypes (ts: TypeInfo seq) : TypeInfo seq =
+        let rec inheritanceCounter (t: System.Type) =
+            if t.BaseType = null || t.BaseType.Assembly <> t.Assembly
+            then 0
+            else inheritanceCounter t.BaseType
+        Seq.sortBy inheritanceCounter ts
+
 let ofMemberInfo (m: MemberInfo) =
     match m with
     | :? FieldInfo  as f ->
@@ -55,6 +63,7 @@ let ofTypeInfo (t: TypeInfo) =
 let ofAssembly (a: Assembly) =
     a.GetExportedTypes ()
     |> Seq.map (fun t -> t.GetTypeInfo ())
+    |> Utils.sortTypes
     |> Seq.map ofTypeInfo
     |> Seq.choose id
     |> Some
