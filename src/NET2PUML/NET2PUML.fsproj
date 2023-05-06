@@ -4,6 +4,8 @@
         <OutputType>Exe</OutputType>
         <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
         <RootNamespace>Net2Puml</RootNamespace>
+        
+        <WarningsAsErrors>true</WarningsAsErrors>
     </PropertyGroup>
 
     <ItemGroup>
