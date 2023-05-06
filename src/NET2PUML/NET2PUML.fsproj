@@ -6,6 +6,13 @@
         <RootNamespace>Net2Puml</RootNamespace>
         
         <WarningsAsErrors>true</WarningsAsErrors>
+
+        <Title>NET2PUML</Title>
+        <Authors>Y56380X</Authors>
+        <Version>1.0</Version>
+
+        <PackAsTool>true</PackAsTool>
+        <ToolCommandName>net2puml</ToolCommandName>
     </PropertyGroup>
 
     <ItemGroup>
