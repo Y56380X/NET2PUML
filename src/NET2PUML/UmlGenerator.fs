@@ -1,3 +1,6 @@
+// Copyright Y56380X https://github.com/Y56380X/NET2PUML.
+// Licensed under the MIT License.
+
 module Net2Puml.UmlGenerator
 
 open System.Reflection
@@ -12,6 +15,13 @@ module private Utils =
         Seq.sortBy inheritanceCounter ts
 
 let ofMemberInfo (m: MemberInfo) =
+    let rec typeName (t: System.Type) =
+        if t.IsGenericType
+        then
+            let name = t.Name.Substring (0, t.Name.LastIndexOf '`')
+            let genericNames = Seq.map typeName t.GenericTypeArguments
+            $"""{name}<{String.concat "," genericNames}>"""
+        else t.Name
     match m with
     | :? FieldInfo  as f ->
         let visibility =
@@ -24,7 +34,7 @@ let ofMemberInfo (m: MemberInfo) =
             elif f.IsAssembly
             then Visibility.Package
             else Visibility.Other
-        Some <| Field  (f.Name, visibility, f.FieldType.Name)
+        Some <| Field  (f.Name, visibility, typeName f.FieldType)
     | :? MethodInfo as m ->
         let visibility =
             if m.IsPrivate
@@ -36,7 +46,7 @@ let ofMemberInfo (m: MemberInfo) =
             elif m.IsAssembly
             then Visibility.Package
             else Visibility.Other
-        Some <| Method (m.Name, visibility, m.ReturnType.Name)
+        Some <| Method (m.Name, visibility, typeName m.ReturnType)
     | _ -> None
 
 let ofTypeInfo (t: TypeInfo) =
