@@ -10,3 +10,4 @@ Generate PlantUML markup from .NET assemblies.
 ## Hints
 
 * When using structs in your code, use newer versions of PlantUML that supports the struct markup
+* Using this tool loads .NET assemblies, so you should be careful what you load into this tool
