@@ -1,4 +1,7 @@
-﻿open System
+﻿// Copyright Y56380X https://github.com/Y56380X/NET2PUML.
+// Licensed under the MIT License.
+
+open System
 open System.IO
 open System.Reflection
 open System.Runtime.Loader
@@ -8,7 +11,7 @@ let args = Environment.GetCommandLineArgs ()
 
 let inFile = FileInfo (args[1])
 let outFile = FileInfo $"{Path.GetFileNameWithoutExtension inFile.Name}.puml"
-let loadDependencies = true
+let loadDependencies = Seq.contains "--load-dependencies" args
 
 if loadDependencies
 then
