@@ -11,7 +11,7 @@ module private Utils =
         let rec inheritanceCounter (t: System.Type) =
             if t.BaseType = null || t.BaseType.Assembly <> t.Assembly
             then 0
-            else inheritanceCounter t.BaseType
+            else inheritanceCounter t.BaseType + 1
         Seq.sortBy inheritanceCounter ts
 
 let ofMemberInfo (m: MemberInfo) =
