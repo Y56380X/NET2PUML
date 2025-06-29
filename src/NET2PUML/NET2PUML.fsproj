@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
+        <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
         <RootNamespace>Net2Puml</RootNamespace>
         
         <WarningsAsErrors>true</WarningsAsErrors>
@@ -10,8 +10,8 @@
         <Title>NET2PUML</Title>
         <Description>Tool for gernerating PlantUML files from .NET assemblies.</Description>
         <Authors>Y56380X</Authors>
-        <Version>1.0</Version>
-        <Copyright>Copyright (c) 2022-2023 Y56380X</Copyright>
+        <Version>1.1</Version>
+        <Copyright>Copyright (c) 2022-2025 Y56380X</Copyright>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
 
         <PackAsTool>true</PackAsTool>
